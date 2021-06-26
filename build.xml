@@ -1,0 +1,86 @@
+<project name="Build" default="main" basedir=".">
+	
+  	<property name="build.dir" location="C:\Daten\Studium\Medieninformatik Online\Softwaretechnik\Übungen\Übung9\build"/>
+  	<property name="docs.dir"  location="C:\Daten\Studium\Medieninformatik Online\Softwaretechnik\Übungen\Übung9\docs"/>
+	<property name="dist.dir" location="C:\Daten\Studium\Medieninformatik Online\Softwaretechnik\Übungen\Übung9\dist" />
+    <property name="test.dir" location="C:\Daten\Studium\Medieninformatik Online\Softwaretechnik\Übungen\Übung9\test" />
+    <property name="lib.dir" location="C:\Daten\Studium\Medieninformatik Online\Softwaretechnik\Übungen\Übung9\test" />
+	
+	<path id = "classpath.base"/>
+		
+	<path id = "classpath.test">
+		<pathelement location = "lib/junit-4.13.2.jar" />
+	    <pathelement location = "${testdir}" />
+	    <pathelement location = "${srcdir}" />
+	    <path refid = "classpath.base" />
+	</path>
+	
+  	<target name="get">
+  		<input message="Working directory:" addproperty="src.dir"/>
+  	</target>
+	
+    <target name="init" depends="clean">
+    	<tstamp/>
+        <mkdir dir="${build.dir}" />
+        <mkdir dir="${docs.dir}" />
+    	<mkdir dir="${dist.dir}" />
+    	<mkdir dir="${test.dir}" />
+    	<mkdir dir="${lib.dir}"/>
+    </target>
+	
+    <target name="compile" depends="get, init">
+        <javac srcdir = "${src.dir}" destdir = "${test.dir}" includeAntRuntime = "true">
+           <classpath refid = "classpath.test"/>
+        </javac>
+    </target>
+
+	<target name ="jar" depends="test">
+		<jar destfile="${dist.dir}\build-${DSTAMP}.jar" basedir="${build.dir}">
+        	<manifest>
+            	<attribute name="Main-Class" value="test.Main" />
+        	</manifest>
+    	</jar>
+	</target>
+	
+	<target name="test" depends="compile">
+		 <junit printsummary="on" fork="true" haltonfailure="yes">
+		 	<classpath refid="classpath.test" />
+		    <formatter type="xml" />
+		    <batchtest todir="${test.dir}">
+		    	<fileset dir="${src.dir}">
+		        	<include name="**/*Test*.java" />
+		        </fileset>
+			</batchtest>
+		</junit>
+	</target>
+	
+  	<target name="run" depends="jar">
+  		<java classname= "test.Main">
+  		  <arg value="-h"/>
+  		  <classpath>
+  		    <pathelement location="${dist.dir}\build-${DSTAMP}.jar"/>
+  		    <pathelement path="${build.dir}"/>
+  		  </classpath>
+  		</java>
+  	</target>
+
+	<target name="docs" depends="compile">
+  		<javadoc packagenames="src" sourcepath="${src.dir}" destdir="${docs.dir}">
+  		<fileset dir="${src.dir}">
+  			<include name="**" />
+  				</fileset>
+  			</javadoc>
+	</target>
+
+	<target name="clean">
+        <delete dir="${build.dir}" />
+        <delete dir="${doc.dir}" />
+		<delete dir="${dist.dir}" />
+  	</target>
+	
+	<target name="main" depends="run, jar, docs">
+		<description>"start"</description>
+	</target>
+	
+
+</project>
