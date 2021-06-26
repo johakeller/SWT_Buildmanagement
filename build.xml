@@ -25,11 +25,10 @@
         <mkdir dir="${docs.dir}" />
     	<mkdir dir="${dist.dir}" />
     	<mkdir dir="${test.dir}" />
-    	<mkdir dir="${lib.dir}"/>
     </target>
 	
     <target name="compile" depends="get, init">
-        <javac srcdir = "${src.dir}" destdir = "${test.dir}" includeAntRuntime = "true">
+        <javac srcdir = "${src.dir}" destdir = "${build.dir}" includeAntRuntime = "true">
            <classpath refid = "classpath.test"/>
         </javac>
     </target>
@@ -76,11 +75,11 @@
         <delete dir="${build.dir}" />
         <delete dir="${doc.dir}" />
 		<delete dir="${dist.dir}" />
+		<delete dir="${test.dir}" />
   	</target>
 	
 	<target name="main" depends="run, jar, docs">
 		<description>"start"</description>
 	</target>
 	
-
 </project>
