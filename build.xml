@@ -73,7 +73,7 @@
 
 	<target name="clean">
         <delete dir="${build.dir}" />
-        <delete dir="${doc.dir}" />
+        <delete dir="${docs.dir}" />
 		<delete dir="${dist.dir}" />
 		<delete dir="${test.dir}" />
   	</target>
