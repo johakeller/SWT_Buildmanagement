@@ -4,7 +4,6 @@
   	<property name="docs.dir"  location="C:\Daten\Studium\Medieninformatik Online\Softwaretechnik\Übungen\Übung9\docs"/>
 	<property name="dist.dir" location="C:\Daten\Studium\Medieninformatik Online\Softwaretechnik\Übungen\Übung9\dist" />
     <property name="test.dir" location="C:\Daten\Studium\Medieninformatik Online\Softwaretechnik\Übungen\Übung9\test" />
-    <property name="lib.dir" location="C:\Daten\Studium\Medieninformatik Online\Softwaretechnik\Übungen\Übung9\test" />
 	
 	<path id = "classpath.base"/>
 		
@@ -18,7 +17,7 @@
   	<target name="get">
   		<input message="Working directory:" addproperty="src.dir"/>
   	</target>
-	
+		
     <target name="init" depends="clean">
     	<tstamp/>
         <mkdir dir="${build.dir}" />
